@@ -12,7 +12,7 @@ chmod +x jq
 ./ngrok http $APP_PORT > /dev/null &
 
 # give ngrok a second to register URLs
-sleep 1m
+sleep 5
 
 # Grab the ngrok url to send to the API
 START_URL=$(curl -s 'http://localhost:4040/api/tunnels' | ./jq -r '.tunnels[1].public_url')
@@ -36,9 +36,11 @@ echo "https://api.ghostinspector.com/v1/suite-results/$RESULT_ID/?apiKey=$GHOST_
 if [ $RESULT_ID == null ]; then
   echo "Suite failed! ¯\_(ツ)_/¯"
 else
+  echo "Result id: $RESULT_ID";
   while [ "$STATUS" = 'null' ]; do
     sleep 5
     SUITE_RESULT=$(curl -s "https://api.ghostinspector.com/v1/suite-results/$RESULT_ID/?apiKey=$GHOST_API_KEY")
+    echo $SUITE_RESULT;
     STATUS=$(echo $SUITE_RESULT | ./jq -r '.data.passing')
     echo " - status: $STATUS"
   done
