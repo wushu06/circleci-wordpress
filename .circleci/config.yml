@@ -1,5 +1,8 @@
+version: 2.1 # CircleCI version
+orbs:
+  aws-s3: circleci/aws-s3@2.0.0
 jobs:
-  build:
+  copy:
     docker:
       - image: 'cimg/python:3.6'
     steps:
@@ -17,6 +20,23 @@ jobs:
       - aws-s3/copy:
           arguments: '--dryrun'
           from: bucket/build_asset.txt
-          to: 's3://my-s3-bucket-name'
-orbs:
-  aws-s3: circleci/aws-s3@2.0.0
+          to: 's3://my-s3-bucket-nam
+  build:
+    machine: true # Use a Linux VM instead of docker environment
+    working_directory: ~/repo # Default working directory, where your project will be cloned
+    steps:
+      - checkout
+      # Maybe you need to add some config file specific to circle…
+      - run: echo "hello world!"
+#      - run: docker-compose up -d
+#      - store_artifacts:
+#          path: ~/repo/features/fail-screenshots
+#      - run:
+#          name: Execute test
+#          command: bash build.sh
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - copy
+      - test
