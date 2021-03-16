@@ -12,13 +12,15 @@ jobs:
           aws-region: AWS_REGION_BLUE
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: 's3://elementary-circleci/dump.sql'
-          to: /tmp/dump.sql
-      - run: docker-compose up -d
-      - store_artifacts:
-          path: ~/repo/features/fail-screenshots
-      - run:
-          name: Execute test
-          command: bash build.sh
+          to: tmp/dump.sql
+      - run: echo pwd
+      - run: cat tmp/dump.sql
+#      - run: docker-compose up -d
+#      - store_artifacts:
+#          path: ~/repo/features/fail-screenshots
+#      - run:
+#          name: Execute test
+#          command: bash build.sh
 workflows:
   version: 2.1
   build_and_test:
