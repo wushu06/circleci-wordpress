@@ -1,24 +1,15 @@
-version: 2 # CircleCI version
-orbs:
-  aws-s3: circleci/aws-s3@x.y
 jobs:
   build:
-    machine: true # Use a Linux VM instead of docker environment
-    working_directory: ~/repo # Default working directory, where your project will be cloned
+    docker:
+      - image: 'cimg/python:3.6'
     steps:
-        - checkout
-        # Maybe you need to add some config file specific to circle…
-        #- run: cp .circleci/.some-parameter-file .some-parameter-file
-        - aws-s3/copy:
-            aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
-            aws-region: AWS_REGION_BLUE
-            aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
-            from: 's3://elementary-circleci/dump.sql'
-            to: dump.sql
-        - run: cat dump.sql
-#        - run: docker-compose up -d
-#        - store_artifacts:
-#            path: ~/repo/features/fail-screenshots
-#        - run:
-#            name: Execute test
-#            command: bash build.sh
+      - checkout
+      - aws-s3/copy:
+        aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+        aws-region: AWS_REGION_BLUE
+        aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
+        from: 's3://elementary-circleci/dump.sql'
+        to: dump.sql
+      - run: cat dump.sql
+orbs:
+  aws-s3: circleci/aws-s3@x.y
