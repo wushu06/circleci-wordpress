@@ -20,7 +20,7 @@ jobs:
       - aws-s3/copy:
           arguments: '--dryrun'
           from: bucket/build_asset.txt
-          to: 's3://my-s3-bucket-nam
+          to: 's3://my-s3-bucket-nam'
   build:
     machine: true # Use a Linux VM instead of docker environment
     working_directory: ~/repo # Default working directory, where your project will be cloned
@@ -39,4 +39,4 @@ workflows:
   build_and_test:
     jobs:
       - copy
-      - test
+      - build
