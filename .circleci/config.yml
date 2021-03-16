@@ -4,10 +4,12 @@ orbs:
   aws-s3: circleci/aws-s3@x.y
 
 jobs:
-  test:
+  integration-test-1:
+    docker:
+      - image: cimg/python:3.6
     steps:
       - checkout
-      - aws-s3/sync:
+      - aws-s3/copy:
           aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
           aws-region: AWS_REGION_BLUE
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
