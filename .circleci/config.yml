@@ -5,11 +5,11 @@ jobs:
     steps:
       - checkout
       - aws-s3/copy:
-        aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
-        aws-region: AWS_REGION_BLUE
-        aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
-        from: 's3://elementary-circleci/dump.sql'
-        to: dump.sql
+          aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+          aws-region: AWS_REGION_BLUE
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
+          from: 's3://elementary-circleci/dump.sql'
+          to: dump.sql
       - run: cat dump.sql
 orbs:
   aws-s3: circleci/aws-s3@x.y
