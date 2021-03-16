@@ -1,15 +1,20 @@
-jobs:
-  build:
-    docker:
-      - image: 'cimg/python:3.6'
-    steps:
-      - checkout
-      - aws-s3/sync:
-          aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
-          aws-region: AWS_REGION_BLUE
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
-          from: 's3://elementary-circleci/dump.sql'
-          to: dump.sql
-      - run: cat dump.sql
+version: 2.1
+
 orbs:
   aws-s3: circleci/aws-s3@x.y
+
+workflows:
+  test_my_app:
+    jobs:
+      build:
+        docker:
+          - image: 'cimg/python:3.6'
+        steps:
+          - checkout
+          - aws-s3/sync:
+              aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+              aws-region: AWS_REGION_BLUE
+              aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
+              from: 's3://elementary-circleci/dump.sql'
+              to: dump.sql
+          - run: cat dump.sql
