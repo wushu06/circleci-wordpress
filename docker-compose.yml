@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     volumes:
       - db_data:/var/lib/mysql
-      - /home/circleci/repo/tmp/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ~/repo/tmp/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
