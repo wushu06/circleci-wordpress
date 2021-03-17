@@ -7,17 +7,16 @@ jobs:
     working_directory: ~/repo # Default working directory, where your project will be cloned
     steps:
       - checkout
+      - run: docker-compose up -d
       - aws-s3/copy:
           aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
           aws-region: AWS_REGION_BLUE
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: 's3://elementary-circleci/dump.sql'
           to: ~/repo/tmp/dump.sql
-      - run: echo $PWD
-      - run: cat ~/repo/tmp/dump.sql
-      - run: docker-compose up -d
-      - store_artifacts:
-          path: ~/repo/features/fail-screenshots
+      - run: |
+          cat ~/repo/tmp/dump.sql
+          docker exec -i wpmysql mysql -uwordpress -pwordpress wordpress < ~/repo/tmp/dump.sql
       - run:
           name: Execute test
           command: bash build.sh

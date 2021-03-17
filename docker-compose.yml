@@ -3,9 +3,10 @@ version: "3.0"
 services:
   mysql:
     image: mysql:5.7
+    container_name: wpmysql
     volumes:
       - db_data:/var/lib/mysql
-      - ~/repo/tmp/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+     # - ~/repo/tmp/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
