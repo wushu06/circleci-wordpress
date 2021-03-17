@@ -15,12 +15,12 @@ jobs:
           to: ~/repo/tmp/dump.sql
       - run: echo $PWD
       - run: cat ~/repo/tmp/dump.sql
-#      - run: docker-compose up -d
-#      - store_artifacts:
-#          path: ~/repo/features/fail-screenshots
-#      - run:
-#          name: Execute test
-#          command: bash build.sh
+      - run: docker-compose up -d
+      - store_artifacts:
+          path: ~/repo/features/fail-screenshots
+      - run:
+          name: Execute test
+          command: bash build.sh
 workflows:
   version: 2.1
   build_and_test:
